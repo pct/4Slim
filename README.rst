@@ -1,0 +1,52 @@
+4Slim
+=====
+
+4Slim, a PHP 5.3 framework based on Slim Framework, idiorm and Haanga Template.
+
+Install
+---------
+#. Let logs can be written by www user::
+
+    # chown -R www:www logs tpl_cache
+
+Thanks for these libraries
+--------------------------
+#. Slim Framework (http://www.slimframework.com/)
+#. idiorm (http://j4mie.github.com/idiormandparis/)
+#. Haanga (http://haanga.org/)
+#. Free HTML5 Admin Template (http://medialoot.com/item/html5-admin-template/)
+
+FAQ
+----
+1. Q: Is 4money secure enough?
+   
+   A: It is NOT safe when you have bad guys at your place. It has been quick developed, but it's enough for simple use at private network.
+
+2. Q: How to use nginx without apache .htaccess?
+   
+   A: Use this in your nginx.conf::
+
+    if (!-f $request_filename){
+        set $rule_0 1$rule_0;
+    }
+
+    if ($rule_0 = "1"){
+        rewrite ^/(.*)$ /bootstrap.php last;
+    }
+
+License
+-------
+http://www.opensource.org/licenses/bsd-license.php
+
+The BSD 2-Clause License ("Simplified BSD License" or "FreeBSD License")::
+
+    Copyright (c) 2011, 4point-inc.com
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+     * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+     * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+

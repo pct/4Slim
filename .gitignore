@@ -1,0 +1,8 @@
+*~
+*.swp
+tpl_cache/*.php
+logs/*.log
+pdf/*.html
+pdf/images
+pdf/js
+.DS_Store
