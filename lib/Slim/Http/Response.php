@@ -54,6 +54,11 @@ class Slim_Http_Response {
     protected $request;
 
     /**
+     * @var string
+     */
+    protected $httpVersion = '1.1';
+
+    /**
      * @var int HTTP status code
      */
     protected $status = 200;
@@ -116,6 +121,8 @@ class Slim_Http_Response {
         415 => '415 Unsupported Media Type',
         416 => '416 Requested Range Not Satisfiable',
         417 => '417 Expectation Failed',
+        422 => '422 Unprocessable Entity',
+        423 => '423 Locked',
         //Server Error 5xx
         500 => '500 Internal Server Error',
         501 => '501 Not Implemented',
@@ -136,6 +143,24 @@ class Slim_Http_Response {
     public function __construct( Slim_Http_Request $req ) {
         $this->request = $req;
         $this->header('Content-Type', 'text/html');
+    }
+
+    /**
+     * Set and/or get the HTTP response version
+     * @param   string $version
+     * @return  void
+     * @throws  InvalidArgumentException If argument is not a valid HTTP version
+     */
+    public function httpVersion( $version = null ) {
+        if ( $version ) {
+            $version = (string)$version;
+            if ( $version === '1.0' || $version === '1.1' ) {
+                $this->httpVersion = $version;
+            } else {
+                throw new InvalidArgumentException('Invalid HTTP version in Response object');
+            }
+        }
+        return $this->httpVersion;
     }
 
     /**
@@ -259,7 +284,7 @@ class Slim_Http_Response {
             header('Status: ' . self::getMessageForCode($this->status()));
         } else {
             //Else send HTTP message
-            header('HTTP/1.1 ' . self::getMessageForCode($this->status()));
+            header(sprintf('HTTP/%s %s', $this->httpVersion, self::getMessageForCode($this->status())));
         }
 
         //Send headers

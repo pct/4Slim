@@ -1,7 +1,7 @@
 <?php
 
-require 'Slim/Slim.php';
-require 'Slim/Views/HaangaView.php';
+require 'lib/Slim/Slim.php';
+require 'lib/Slim/Views/HaangaView.php';
 require 'lib/idiorm.php';
 require 'config.php';
 

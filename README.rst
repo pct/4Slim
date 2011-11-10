@@ -9,20 +9,25 @@ Install
 
     # chown -R www:www logs tpl_cache
 
+Develop
+-------
+
+#. install compass, coffeescript
+#. gem install bundle
+#. cd build; bundle; guard
+
 Thanks for these libraries
 --------------------------
 #. Slim Framework (http://www.slimframework.com/)
 #. idiorm (http://j4mie.github.com/idiormandparis/)
 #. Haanga (http://haanga.org/)
 #. Free HTML5 Admin Template (http://medialoot.com/item/html5-admin-template/)
+#. compass (http://compass-style.org/)
+#. rake (http://rake.rubyforge.org/)
 
 FAQ
 ----
-1. Q: Is 4money secure enough?
-   
-   A: It is NOT safe when you have bad guys at your place. It has been quick developed, but it's enough for simple use at private network.
-
-2. Q: How to use nginx without apache .htaccess?
+1. Q: How to use nginx without apache .htaccess?
    
    A: Use this in your nginx.conf::
 
