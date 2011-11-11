@@ -1,0 +1,79 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_list_header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <div class="module_content">
+        <table id="item_list_table" cellpadding="0" cellspacing="0" border="0" class="display" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>項目名稱</th>
+                    <th>首頁大圖</th>
+                    <!--
+                    <th>首頁大圖描述</th>
+                    -->
+                    <th>首頁小圖</th>
+                    <!--
+                    <th>首頁小圖描述</th>
+                    <th>項目簡介</th>
+                    <th>項目完整介紹</th>
+                    -->
+                    <th>項目分類</th>
+                    <th>首頁顯示</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if items %}
+                {% for item in items %}
+                <tr>
+                    <td>{{item.item_name}}</td>
+                    <td>
+                        <img src="{{doc_root}}/uploads/{{item.home_big_image}}" alt="" width="100" />
+                    </td>
+                    <!--
+                    <td>{{item.home_long_desc|nl2br}}</td>
+                    -->
+                    <td>
+                        <img src="{{doc_root}}/uploads/{{item.home_small_image}}" alt="" width="100" />
+                    </td>
+                    <!--
+                    <td>{{item.home_short_desc|nl2br}}</td>
+                    <td>{{item.detail_intro|nl2br}}</td>
+                    <td>{{item.detail_desc|nl2br}}</td>
+                    -->
+                    <td>
+                        {% if item.item_type == 'hotel' %} 飯店 {% else %} 景點 {% endif %} 
+                    </td>
+                    <td>
+                        {% if item.at_home == '1' %} 是 {% else %} - {% endif %} 
+                    </td>
+                    <td nowrap>
+                        <a class="middle button" href="item/{{item.item_id}}/edit"><span class="pen icon"></span>編輯</a><a class="middle button" href="item/{{item.item_id}}/hotels"><span class="pen icon"></span>相關飯店</a><a class="middle button" href="item/{{item.item_id}}/sights"><span class="pen icon"></span>相關景點</a><a class="middle button" href="item/{{item.item_id}}/slides"><span class="pen icon"></span>內頁輪播圖</a><a class="middle button" href="item/{{item.item_id}}/doc"><span class="uparrow icon"></span>上傳文件</a><a class="right negative button" href="item/{{item.item_id}}/delete"><span class="trash icon"></span>刪除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div> 
+</article>
+
+<script type="text/javascript">
+$(function() {
+    $('#item_list_table').dataTable({"bJQueryUI": true, "iDisplayLength": 15, "aLengthMenu": [[15, 50, -1], [15, 50, "All"]], "sPaginationType": "full_numbers", "oLanguage":{
+        "sUrl": "js/datatables_tw.txt"
+        }
+    });
+});
+</script>
+
+{% endblock %}

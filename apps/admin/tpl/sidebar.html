@@ -1,0 +1,67 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_form_head.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <div class="module_content">
+        <form id="_form" class="wufoo">
+            <input type="hidden" name="_METHOD" value="PUT" />
+            <ul>
+                <li>
+                    <label class="desc" for="sidebar_block1">
+                        圖文區塊：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="sidebar_block1" name="sidebar_block1" class="ckeditor">{{sidebar_block1}}</textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="sidebar_block2">
+                        旅遊資訊：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="sidebar_block2" name="sidebar_block2" class="ckeditor">{{sidebar_block2}}</textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="sidebar_block3">
+                        旅遊備註：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="sidebar_block3" name="sidebar_block3" class="ckeditor">{{sidebar_block3}}</textarea>
+                    </span>
+                </li>
+            </ul>
+            <div>
+                <input id="submit" class="btTxt submit" type="submit" value="儲存" />
+            </div>
+        </form>
+    </div>
+</article>
+
+<div id="show_notice" style="display:none;"></div>
+
+<script type="text/javascript">
+$(function() {
+    $('#_form').validate({
+        submitHandler: function() {
+            $.post('{{doc_root}}/admin/settings', $('#_form').serialize(), function(data) {
+                $('#show_notice').html(data).fadeIn('slow', function() {
+                    $.equal_height();
+                });
+            });
+            return false;
+        }
+    });
+}); 
+</script>
+
+{% endblock %}

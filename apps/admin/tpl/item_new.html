@@ -1,0 +1,151 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_form_head.html' %}
+{% include 'admin/_upload_head.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <div class="module_content">
+        <form id="_form" class="wufoo" enctype="multipart/form-data">
+            <ul>
+                <li>
+                    <label class="desc" for="item_name">
+                        項目名稱：
+                    </label>
+                    <span>
+                        <input class="required field text" size="50" type="text" name="item_name" />
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="home_big_image">
+                        首頁大圖：
+                    </label>
+                    <div id="home_big_image"></div>
+                    <input type="hidden" name="home_big_image" value="" />
+                </li>
+                <li>
+                    <label class="desc" for="home_long_desc">
+                        首頁大圖描述：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="home_long_desc" name="home_long_desc" class="ckeditor required"></textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="home_small_image">
+                        首頁小圖：
+                    </label>
+                    <span>
+                    <div id="home_small_image"></div>
+                    <input type="hidden" name="home_small_image" value="" />
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="home_short_desc">
+                        首頁小圖描述：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="home_short_desc" name="home_short_desc" class="ckeditor required"></textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="detail_intro">
+                        項目簡介：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="detail_intro" name="detail_intro" class="ckeditor required"></textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="detail_desc">
+                        項目完整介紹：
+                    </label>
+                    <span>
+                        <textarea cols="110" rows="10" id="detail_desc" name="detail_desc" class="ckeditor required"></textarea>
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="item_type">
+                        項目分類：
+                    </label>
+                    <span>
+                        <input class="required field radio" type="radio" name="item_type" value="hotel" style="display:inline;"/> 飯店
+                        <input class="required field radio" type="radio" name="item_type" value="sight" checked="checked" style="display:inline;"/> 景點
+                    </span>
+                </li>
+                <li>
+                    <label class="desc" for="at_home">
+                        是否要在首頁顯示：
+                    </label>
+                    <span>
+                        <input class="required field radio" type="radio" name="at_home" value="1" style="display:inline;"/> 是
+                        <input class="required field radio" type="radio" name="at_home" value="0" checked="checked" style="display:inline;"/> 否
+                    </span>
+                </li>
+           </ul>
+            <div>
+                <input id="submit" class="btTxt submit" type="submit" value="新增項目" />
+            </div>
+        </form>
+    </div> 
+</article>
+
+<div id="show_notice" style="display:none;"></div>
+
+<script type="text/javascript">
+$(function() {
+    $('#_form').validate({
+        submitHandler: function() {
+            $.post('{{doc_root}}/admin/item', $('#_form').serialize(), function(data) {
+                $('#show_notice').html(data).fadeIn('slow', function() {
+                    $.equal_height();
+                });
+            });
+            return false;
+        }
+    });
+
+    var upload_template = '<div class="qq-uploader">' + 
+                '<div class="qq-upload-drop-area"><span>Drop files here to upload</span></div>' +
+                '<div class="qq-upload-button">請上傳一個圖擋</div>' +
+                '<ul class="qq-upload-list"></ul>' +
+                '</div>';
+
+    $.home_big_image_uploader = new qq.FileUploader({
+        element: document.getElementById('home_big_image'),
+        action: '{{doc_root}}/admin/item/upload',
+        params: {
+            image_key: 'home_big_image'
+        },
+        template: upload_template,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+        onComplete: function(id, fileName, responseJSON) {
+            $(':input[name=home_big_image]').val(responseJSON.filename);
+        }
+    });
+    
+    $.home_small_image_uploader = new qq.FileUploader({
+        element: document.getElementById('home_small_image'),
+        action: '{{doc_root}}/admin/item/upload',
+        params: {
+            image_key: 'home_small_image'
+        },
+        template: upload_template,
+        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+        onComplete: function(id, fileName, responseJSON) {
+            $(':input[name=home_small_image]').val(responseJSON.filename);
+        }
+    });
+
+
+});
+</script>
+
+{% endblock %}

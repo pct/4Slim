@@ -1,0 +1,30 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_form_head.html' %}
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+
+<style type="text/css">
+    #sidebar {
+        display:none;
+    }
+    #main {
+        margin: 0px auto;
+        float: none !important;
+        background: none !important;
+    }
+    #secondary_bar {
+        display:none;
+    }
+</style>
+
+{% block login %}
+{% endblock %}
+
+{% endblock %}

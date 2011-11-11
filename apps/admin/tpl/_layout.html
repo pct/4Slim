@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant">
+    <head>
+        {% block head %}
+        {% include 'admin/_header.html' %}
+        {% endblock %}
+    </head>
+    <body>
+        <header id="header">
+            <hgroup>
+                <h1 class="site_title">
+                    <a href="{{doc_root}}/admin/home">{{site_name|default:'FUNTRIP'}}</a>
+                </h1>
+                <h2 class="section_title">{{breadcrumb_title}}</h2>
+            </hgroup>
+        </header>
+        <section id="secondary_bar">
+            <div class="user">
+                <p>
+                    管理員
+                    {% if is_login %}
+                    <a style="color:red;" href="{{doc_root}}/admin/logout"><b>登出</b></a>
+                    {% endif %}
+                </p>
+            </div>
+            {% include 'admin/_breadcrumb.html' %}
+        </section>
+        <aside id="sidebar" class="column">
+            {% block sidebar %}
+            {% include 'admin/_sidebar.html' %}
+            {% endblock %}
+        </aside>
+        <section id="main" class="column">
+            <div id="main_content">
+                {% include 'admin/_no_script.html' %}
+                {% block content %}
+                {% endblock %}
+            </div>
+            <footer>
+                {% include 'admin/_footer.html' %}
+            </footer>
+        </section>
+    </body>
+</html>

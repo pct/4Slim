@@ -1,0 +1,30 @@
+<div id="main-nav">
+    <h3>飯店與景點</h3>
+    <ul>
+        <li class="icn_new_article"><a href="{{doc_root}}/admin/item/new">建立景點|飯店</a></li>
+        <li class="icn_categories"><a href="{{doc_root}}/admin/items">景點|飯店列表</a></li>
+    </ul>
+    <h3>側邊欄</h3>
+    <ul>
+        <li class="icn_folder"><a href="{{doc_root}}/admin/sidebar" class="current">側邊欄資料</a></li>
+    </ul>
+    <h3>系列網站</h3>
+    <ul>
+        <li class="icn_new_article"><a href="{{doc_root}}/admin/site/new">新增網站</a></li>
+        <li class="icn_categories"><a href="{{doc_root}}/admin/sites">系列網站列表</a></li>
+    </ul>
+    <h3>設定</h3>
+    <ul>
+        <li class="icn_settings"><a href="{{doc_root}}/admin/settings">網站資料</a></li>
+        <li class="icn_settings"><a href="{{doc_root}}/admin/phone">網站顯示電話</a></li>
+        <li class="icn_settings"><a href="{{doc_root}}/admin/email">網站訂單 Email</a></li>
+        <li class="icn_settings"><a href="{{doc_root}}/admin/password">管理員密碼</a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+$(function() {
+    var curr_url = '{{curr_url}}';
+    $('#main-nav ul li').removeClass('current');
+    $('#main-nav ul li a').filter(function(index) {return $(this).attr('href').replace('{{doc_root}}/','') == curr_url.replace('/', '');}).parent().addClass('current');
+});
+</script>

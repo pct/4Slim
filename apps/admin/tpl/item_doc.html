@@ -1,0 +1,62 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_form_head.html' %}
+{% include 'admin/_upload_head.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <div class="module_content">
+        <form id="_form" class="wufoo" enctype="multipart/form-data">
+            <ul>
+                <li>
+                    <label class="desc" for="item_name">
+                        項目名稱：{{item.item_name}}
+                    </label>
+                </li>
+                <li>
+                    <label class="desc" for="item_doc">
+                        上傳 word：
+                    </label>
+                    <div id="item_doc"></div>
+                    <div id="show_notice" style="display:none;"></div>
+                </li>
+        </form>
+        <div>
+            <a class="button" href="{{doc_root}}/admin/items">返回列表</a>
+        </div>
+    </div> 
+</article>
+
+
+<script type="text/javascript">
+$(function() {
+    var upload_template = '<div class="qq-uploader">' + 
+                '<div class="qq-upload-drop-area"><span>把檔案拖曳到這邊上傳</span></div>' +
+                '<div class="qq-upload-button">請上傳一個文件</div>' +
+                '<ul class="qq-upload-list"></ul>' +
+                '</div>';
+
+    $.item_slide_image_uploader = new qq.FileUploader({
+        element: document.getElementById('item_doc'),
+        action: '{{doc_root}}/admin/item/{{item.item_id}}/doc/upload',
+        params: {
+            image_key: 'item_doc'
+        },
+        template: upload_template,
+        allowedExtensions: ['doc', 'docx', 'pdf'],
+        onComplete: function(id, fileName, responseJSON) {
+            $('#show_notice').html('剛上傳的檔案名稱:' + responseJSON.filename).show();
+        }
+    });
+
+});
+</script>
+
+{% endblock %}

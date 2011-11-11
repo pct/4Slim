@@ -1,0 +1,57 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_list_header.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <h3>
+        項目名稱：{{item.item_name}}
+    </h3>
+    <div style="text-align:right;margin-right:50px;">
+        <a class="button" href="{{doc_root}}/admin/item/{{item.item_id}}/slide/new">新增</a>
+    </div>
+    <div class="module_content">
+        <table id="item_list_table" cellpadding="0" cellspacing="0" border="0" class="display" style="width:100%;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>圖</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if item_slides %}
+                {% for slide in item_slides %}
+                <tr>
+                    <td>{{slide.item_meta_id}}</td>
+                    <td>
+                        <img src="{{doc_root}}/uploads/{{slide.item_meta_path}}" alt="" width="200" />
+                    </td>
+                    <td nowrap>
+                        <a class="negative button" href="{{doc_root}}/admin/item/{{item.item_id}}/slide/{{slide.item_meta_id}}/delete"><span class="trash icon"></span>刪除</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div> 
+</article>
+
+<script type="text/javascript">
+$(function() {
+    $('#item_list_table').dataTable({"bJQueryUI": true, "iDisplayLength": 15, "aLengthMenu": [[15, 50, -1], [15, 50, "All"]], "sPaginationType": "full_numbers", "oLanguage":{
+        "sUrl": "{{doc_root}}/admin/js/datatables_tw.txt"
+        }
+    });
+});
+</script>
+
+{% endblock %}

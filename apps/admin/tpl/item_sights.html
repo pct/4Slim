@@ -1,0 +1,86 @@
+{% extends 'admin/_layout.html' %}
+
+{% block head %}
+{% include 'admin/_header.html' %}
+{% include 'admin/_list_header.html' %}
+{% include 'admin/_form_head.html' %}
+{% endblock %}
+
+{% block content %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <h3>
+        請勾選與 <b>"{{orig_item.item_name}}"</b> 相關的景點並按下確認按鈕
+    </h3>
+    <div class="module_content">
+        <form id="_form" class="wufoo">
+            <input type="hidden" name="_METHOD" value="PUT" />
+            <table id="item_list_table" cellpadding="0" cellspacing="0" border="0" class="display" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>勾選</th>
+                        <th>項目名稱</th>
+                        <th>首頁大圖</th>
+                        <th>首頁小圖</th>
+                        <th>項目分類</th>
+                        <th>首頁顯示</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if items %}
+                    {% for item in items %}
+                    <tr>
+                        <td>
+                            <input name="rel_sights[]" type="checkbox" value="{{item.item_id}}" />                   
+                        </td>
+                        <td>{{item.item_name}}</td>
+                        <td>
+                            <img src="{{doc_root}}/uploads/{{item.home_big_image}}" alt="" width="200" />
+                        </td>
+                        <td>
+                            <img src="{{doc_root}}/uploads/{{item.home_small_image}}" alt="" width="200" />
+                        </td>
+                        <td>
+                            {% if item.item_type == 'hotel' %} 飯店 {% else %} 景點 {% endif %} 
+                        </td>
+                        <td>
+                            {% if item.at_home == '1' %} 是 {% else %} - {% endif %} 
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+            <div style="margin-top:10px;">
+                <input id="submit" class="btTxt submit" type="submit" value="更新{{breadcrumb_title}}" />
+            </div>
+        </form>
+    </div> 
+</article>
+
+<div id="show_notice" style="display:none;"></div>
+
+<script type="text/javascript">
+$(function() {
+    $('#item_list_table').dataTable({"bJQueryUI": true, "iDisplayLength": 15, "aLengthMenu": [[15, 50, -1], [15, 50, "All"]], "sPaginationType": "full_numbers", "oLanguage":{
+        "sUrl": "{{doc_root}}/admin/js/datatables_tw.txt"
+        }
+    });
+    
+    $('#_form').validate({
+        submitHandler: function() {
+            $.post('{{doc_root}}/admin/item/{{orig_item.item_id}}/sights', $('#_form').serialize(), function(data) {
+                $('#show_notice').html(data).fadeIn('slow', function() {
+                    $.equal_height();
+                });
+            });
+            return false;
+        }
+    });
+});
+</script>
+
+{% endblock %}

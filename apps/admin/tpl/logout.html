@@ -1,0 +1,14 @@
+{% extends 'admin/_login_layout.html' %}
+
+{% block login %}
+
+<article class="module width_full">
+    <header>
+        <h3>{{breadcrumb_title}}</h3>
+    </header>
+    <div class="module_content">
+        您已登出！若要管理，請<a href="{{doc_root}}/admin/login/">重新登入</a>
+    </div>
+</article>
+
+{% endblock %}
